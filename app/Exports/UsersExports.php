@@ -78,12 +78,14 @@ class UsersExport implements  FromView, WithTitle, WithEvents
                  $event->sheet->getColumnDimension('B')->setWidth(35);
                  $event->sheet->getColumnDimension('C')->setWidth(25);
                  $event->sheet->getColumnDimension('D')->setWidth(25);
+                 $event->sheet->getColumnDimension('E')->setWidth(25);
 
 
                  $event->sheet->getDelegate()->getStyle('A2')->applyFromArray($style1);
                  $event->sheet->getDelegate()->getStyle('B2')->applyFromArray($style1);
                  $event->sheet->getDelegate()->getStyle('C2')->applyFromArray($style1);
                  $event->sheet->getDelegate()->getStyle('D2')->applyFromArray($style1);
+                 $event->sheet->getDelegate()->getStyle('E2')->applyFromArray($style1);
 
                 //  $event->sheet->getDelegate()->getStyle('A2:X2')->getFont()->setSize(13);
                

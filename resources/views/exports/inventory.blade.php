@@ -8,8 +8,7 @@
             <th style="text-align: center; font-weight: bold; border: 1px solid black;">Parts Name</th>
             <th style="text-align: center; font-weight: bold; border: 1px solid black;">Allocation</th>
             <th style="text-align: center; font-weight: bold; border: 1px solid black;">Qty</th>
-            {{-- <th>Eoh</th> --}}
-            {{-- <th>remarks</th> --}}
+            <th style="text-align: center; font-weight: bold; border: 1px solid black;">Remarks</th>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +16,7 @@
            $calc = 0;
        @endphp
 
-       
+        {{-- from tbl_wip_basemold (FOR SET UP) --}}
         @for ($i = 0; $i < count($get_basemoldwip); $i++)
             <tr>
 				
@@ -25,6 +24,7 @@
 				<td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_basemoldwip[$i]->basemold->part_name }}</td>
                 <td style="text-align: center; border: 1px solid black;font-size: 12rem;">For Set-up</td>
 				<td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_basemoldwip[$i]->EOH }}</td>
+				<td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_basemoldwip[$i]->remarks }}</td>
                 {{-- <td>{{ $get_basemoldwip[$i]->PR_number }}</td> --}}
                 @php
                     $calc = $calc + $get_basemoldwip[$i]->EOH ;
@@ -33,18 +33,23 @@
             </tr>
         @endfor
 
+
+        {{-- from tbl_rework_visual (FOR rework / visual) --}}
+
         @for ($y = 0; $y<count($get_rework_visual); $y++)
             <tr>
                 <td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_rework_visual[$y]->fgs_details->fgs_code }}</td>
                 <td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_rework_visual[$y]->fgs_details->fgs_name }}</td>
                 <td style="text-align: center; border: 1px solid black;font-size: 12rem;">For Rework / Visual</td>
                 <td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_rework_visual[$y]->EOH }}</td>
+                <td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_rework_visual[$y]->remarks }}</td>
                 @php
                     $calc = $calc + $get_rework_visual[$y]->EOH ;
                 @endphp
             </tr>
         @endfor
 
+        {{-- from tbl_fgs_receive (FOR buyoff) --}}
 
         @for ($x = 0; $x < count($get_fgs); $x++){
             <tr>
@@ -53,6 +58,7 @@
 				<td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_fgs[$x]->fgs_details->fgs_name }}</td>
                 <td style="text-align: center; border: 1px solid black;font-size: 12rem;">For Buyoff</td>
 				<td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_fgs[$x]->EOH }}</td>
+				<td style="text-align: center; border: 1px solid black;font-size: 12rem;">{{ $get_fgs[$x]->remarks }}</td>
                 @php
                     $calc = $calc + $get_fgs[$x]->EOH ;
                 @endphp
