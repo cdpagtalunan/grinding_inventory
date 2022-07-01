@@ -110,27 +110,43 @@ class PPCController extends Controller
             // FOR EDITING BASEMOLD
             if($request->basemoldId != null){
 
-
-                BasemoldRecieve::where('id',$request->basemoldId)
-                ->update([
-                    // 'date' => $request->add_date,
+                $edit_array = array(
                     'pr_number' => $request->pr_number,
                     'gr_number' => $request->gr_number,
-                    // 'lot_no' => $request->lot_no,
                     'from' => $request->basemold_cat,
-                    // 'no_of_items' => $request->no_of_items,
-                    // 'qty_basemold' => $request->qty_basemold,
                     'qty_confirmed' => $request->confirm_qty,
                     'remarks' => $request->addRemark,
                     'status' => 0,
-                    // 'qty_after_grinding' => $request->qty_after_grind,
-                ]);
+                );
 
-                Basemold::where('id', $request->fk_basemold_id)
-                ->update([
-                    'code' => $request->pr_number,
-                    'part_name' => $request->gr_number
-                ]);
+                $check_existing_basemold = Basemold::where('code',$request->code)
+                ->where('part_name',$request->part_name)
+                ->first();
+
+                if($check_existing_basemold != null){
+                    // return $check_existing_basemold->id;
+                    $edit_array['fk_basemold_id'] = $check_existing_basemold->id;
+                }
+                else{
+                    $insert_get_basemold_id = Basemold::insertGetId([
+                        'code' =>  $request->code,
+                        'part_name' => $request->part_name
+                    ]);
+
+                    $edit_array['fk_basemold_id'] = $insert_get_basemold_id;
+                }
+
+
+                BasemoldRecieve::where('id',$request->basemoldId)
+                ->update(
+                    $edit_array
+                );
+
+                // Basemold::where('id', $request->fk_basemold_id)
+                // ->update([
+                //     'code' => $request->pr_number,
+                //     'part_name' => $request->gr_number
+                // ]);
 
                 
                 return response()->json(['result' => "2"]);

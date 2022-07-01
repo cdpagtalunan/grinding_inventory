@@ -1,4 +1,7 @@
-@php $layout = 'layouts.admin_layout'; @endphp
+@php 
+    $layout = 'layouts.admin_layout'; 
+    date_default_timezone_set('Asia/Manila');
+@endphp
 
 
 @extends($layout)
