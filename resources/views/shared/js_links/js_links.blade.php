@@ -29,8 +29,8 @@
 <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
 
 <!-- Custom JS -->
-<script src="{{ asset('public/js/my_js/ppc.js?n=5') }}"></script>
-<script src="{{ asset('public/js/my_js/grinding.js?n=70') }}"></script>
+<script src="{{ asset('public/js/my_js/ppc.js?n=6') }}"></script>
+<script src="{{ asset('public/js/my_js/grinding.js?n=71') }}"></script>
 <script src="{{ asset('public/js/my_js/user.js?n=9') }}"></script>
 
 

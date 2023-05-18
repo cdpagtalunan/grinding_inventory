@@ -1140,12 +1140,8 @@
         dataTableFgsShipmentDetails = $("#tbl-fgs-shipment-details").DataTable({
             "processing" : true,
             "serverSide" : true,
-            // "order": [[ 0, "desc" ]],
             "ordering": false,
-            // "columnDefs" : [ {
-            //     targets: [ 0 ],
-            //     orderData: [ 1, 0 ]
-            // }, ],
+            "deferLoading": 57,
             "ajax" : {
                 url: "getFgsShipment",
                 data: function (param){
@@ -1155,7 +1151,6 @@
                     param.fgsPartNameId =  $('#fgsPartNameId').val();
                     param.transactionIdForFgsTable =  $('#transactionIdForFgsTable').val();
                 }
-
             },
             "columns":[    
                 { "data" : "date"},

@@ -23,7 +23,7 @@
 <!-- Toastr -->
 <link rel="stylesheet" href="{{ asset('public/template/plugins/toastr/toastr.min.css') }}">
 
-<link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
+{{-- <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet"> --}}
 
 {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css"> --}}
 

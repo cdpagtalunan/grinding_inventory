@@ -505,6 +505,9 @@ function checkRapidTransaction(fgsId){
             fgsId : fgsId,
         },
         dataType: 'json',
+        beforeSend: function(){
+            $('#tbl-fgs-shipment-details tbody').empty();
+        },
         success: function(response){
             console.log(response);
             

@@ -318,3 +318,15 @@ function delBasemold(delId){
 }
 
 
+// Reset Form values function
+function resetFormAdd() {
+    $('#basemoldId').val('');
+}
+
+// Reset values when modalAddCustomerClaim(Modal) is closed
+$("#modalAddBaseMold").on('hidden.bs.modal', function () {
+    console.log('modal is closed');
+    resetFormAdd();
+});
+
+

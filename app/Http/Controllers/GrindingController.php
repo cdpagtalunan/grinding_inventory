@@ -879,7 +879,7 @@ class GrindingController extends Controller
                     }
                     else{
 
-                        if( $get_fgs_recieve_data1->GR_number == $request->transBasemoldGR || strtoupper($request->transBasemoldGR) == 'FROM STOCK'){
+                        if( $get_fgs_recieve_data1->GR_number == $request->transBasemoldGR || strtoupper($request->transBasemoldGR) == 'FROM STOCK' || $get_fgs_recieve_data1->PR_number == $request->transBasemoldPR){
                             if($get_fgs_recieve_data1->remarks == null){
                                 
 
@@ -1241,249 +1241,7 @@ class GrindingController extends Controller
                                 return response()->json(['result' => 1]);
 
                             }
-                        }
-
-
-                        // return $get_fgs_recieve_data1->remarks;
-                        // if($get_fgs_recieve_data1->remarks == null){
-
-                        //     $fgs_eoh = $get_fgs_recieve_data->EOH;
-                        //     $final_eoh =  $fgs_eoh + $request->trans_fgs_in;
-
-                        //     // FOR GLUED MATERIAL
-                        //     if($request->transactionIdForTable1 == null){
-                        //         // return "not";
-                        //         BasemoldWip::where('id', $request->transactionIdForTable)
-                        //         ->update([
-                        //             'logdel' => 1,
-                        //         ]);
-                
-                        //         $basemold_wip_id = BasemoldWip::insertGetId([
-                        //            'fk_basemold_id' => $request->transBasemoldId,
-                        //            'PR_number' => $request->transBasemoldPR,
-                        //            'GR_number' => $request->transBasemoldGR,
-                        //            'OUT' =>  $request->trans_b_out,
-                        //            'NG' => $request->trans_grinded_ng,
-                        //            'golden_sample' => $request->trans_grinded_gsamp,
-                        //            'EOH' => $request->trans_next_eoh,
-                        //            'created_at' => NOW()
-                        //        ]);
-
-                        //         $fgs_rework_visual_id = ReworkVisual::insertGetId([
-                        //             'fk_fgs_id' => $fgs_id->id,
-                        //             'PR_number'=> $request->transBasemoldPR,
-                        //             'GR_number' => $request->transBasemoldGR,
-                        //             'fgs_rework_IN' => $request->trans_fgs_in,
-                        //             'EOH' => $final_eoh,
-                        //             'created_at' => NOW()
-                        //         ]);
-        
-                        //         ReworkVisualTransaction::insert([
-                        //             'date' => $request->trans_date,
-                        //             'fk_rework_id' => $fgs_rework_visual_id,
-                        //         ]);
-                                
-                        //         wipTransaction::insert([
-                        //             'fk_basemold_id' => $basemold_wip_id,
-                        //             'fk_rework_visual_id' => $fgs_rework_visual_id,
-                        //             'transaction_date' => NOw(),
-                        //             'remarks' => $request->trans_remarks
-                        //         ]);
-            
-            
-                        //     }
-                        //     else{
-                        //         if(($request->trans_b_out%2) != 0){
-                        //             return response()->json(['result' => 0]);
-                        //         }
-                        //         else{
-                        //             $glued_out = $request->trans_b_out/2;
-                        //             $glued_trans_next_eoh = $request->trans_next_eoh/2;
-                
-                        //             BasemoldWip::where('id', $request->transactionIdForTable)
-                        //             ->orWhere('id', $request->transactionIdForTable1)
-                        //             ->update([
-                        //                 'logdel' => 1,
-                        //             ]);
-                    
-                        //             $basemold_wip_id = BasemoldWip::insertGetId([
-                        //             'fk_basemold_id' => $request->transBasemoldId,
-                        //             'PR_number' => $request->transBasemoldPR,
-                        //             'GR_number' => $request->transBasemoldGR,
-                        //             'OUT' =>  $glued_out,
-                        //             'NG' => $request->trans_grinded_ng,
-                        //             'golden_sample' => $request->trans_grinded_gsamp,
-                        //             'EOH' => $glued_trans_next_eoh,
-                        //             'created_at' => NOW()
-                        //             ]);
-                
-                        //             $basemold_wip_id1 = BasemoldWip::insertGetId([
-                        //             'fk_basemold_id' => $request->transBasemoldId1,
-                        //             'PR_number' => $request->transBasemoldPR,
-                        //             'GR_number' => $request->transBasemoldGR,
-                        //             'OUT' =>  $glued_out,
-                        //             'NG' => $request->trans_grinded_ng,
-                        //             'golden_sample' => $request->trans_grinded_gsamp,
-                        //             'EOH' => $glued_trans_next_eoh,
-                        //             'created_at' => NOW()
-                        //             ]);
-
-                        //             $fgs_rework_visual_id = ReworkVisual::insertGetId([
-                        //                 'fk_fgs_id' => $fgs_id->id,
-                        //                 'PR_number'=> $request->transBasemoldPR,
-                        //                 'GR_number' => $request->transBasemoldGR,
-                        //                 'fgs_rework_IN' => $request->trans_fgs_in,
-                        //                 'EOH' => $final_eoh,
-                        //                 'created_at' => NOW()
-                        //             ]);
-            
-                        //             ReworkVisualTransaction::insert([
-                        //                 'date' => $request->trans_date,
-                        //                 'fk_rework_id' => $fgs_rework_visual_id,
-                        //             ]);
-                                    
-                        //             wipTransaction::insert([
-                        //                 'fk_basemold_id' => $basemold_wip_id,
-                        //                 'fk_rework_visual_id' => $fgs_rework_visual_id,
-                        //                 'transaction_date' => NOw(),
-                        //                 'remarks' => $request->trans_remarks
-                        //             ]);
-
-                        //             wipTransaction::insert([
-                        //                 'fk_basemold_id' => $basemold_wip_id1,
-                        //                 'fk_rework_visual_id' => $fgs_rework_visual_id,
-                        //                 'transaction_date' => NOw(),
-                        //                 'remarks' => $request->trans_remarks
-                        //             ]);
-                        //         }
-                                
-                        //     // return $glued_trans_next_eoh;
-            
-                        //     }
-                        //     return response()->json(['result' => 1]);
-                        // }
-                        // else{
-
-                        //     $fgs_eoh = $get_fgs_recieve_data->EOH;
-                        //     $final_eoh =  $fgs_eoh + $request->trans_fgs_in;
-            
-                           
-                        //     // FOR GLUED MATERIAL
-                        //     if($request->transactionIdForTable1 == null){
-                        //         // return "not";
-                        //         BasemoldWip::where('id', $request->transactionIdForTable)
-                        //         ->update([
-                        //             'logdel' => 1,
-                        //         ]);
-                
-                        //         $basemold_wip_id = BasemoldWip::insertGetId([
-                        //            'fk_basemold_id' => $request->transBasemoldId,
-                        //            'PR_number' => $request->transBasemoldPR,
-                        //            'GR_number' => $request->transBasemoldGR,
-                        //            'OUT' =>  $request->trans_b_out,
-                        //            'NG' => $request->trans_grinded_ng,
-                        //            'golden_sample' => $request->trans_grinded_gsamp,
-                        //            'EOH' => $request->trans_next_eoh,
-                        //            'created_at' => NOW()
-                        //        ]);
-
-                        //         $fgs_rework_visual_id = ReworkVisual::insertGetId([
-                        //         'fk_fgs_id' => $fgs_id->id,
-                        //         'PR_number'=> $request->transBasemoldPR,
-                        //         'GR_number' => $request->transBasemoldGR,
-                        //         'fgs_rework_IN' => $request->trans_fgs_in,
-                        //         'EOH' => $final_eoh,
-                        //         'remarks' => $get_fgs_recieve_data1->remarks,
-                        //         'created_at' => NOW()
-                        //         ]);
-        
-                        //         ReworkVisualTransaction::insert([
-                        //             'date' => $request->trans_date,
-                        //             'fk_rework_id' => $fgs_rework_visual_id,
-                        //         ]);
-
-                        //         wipTransaction::insert([
-                        //             'fk_basemold_id' => $basemold_wip_id,
-                        //             'fk_rework_visual_id' => $fgs_rework_visual_id,
-                        //             'transaction_date' => NOw(),
-                        //             'remarks' => $request->trans_remarks
-                        //         ]);
-
-                           
-            
-            
-                        //     }
-                        //     else{
-                        //         if(($request->trans_b_out%2) != 0){
-                        //             return response()->json(['result' => 0]);
-                        //         }
-                        //         else{
-                        //             $glued_out = $request->trans_b_out/2;
-                        //             $glued_trans_next_eoh = $request->trans_next_eoh/2;
-                
-                        //             BasemoldWip::where('id', $request->transactionIdForTable)
-                        //             ->orWhere('id', $request->transactionIdForTable1)
-                        //             ->update([
-                        //                 'logdel' => 1,
-                        //             ]);
-                    
-                        //             $basemold_wip_id = BasemoldWip::insertGetId([
-                        //             'fk_basemold_id' => $request->transBasemoldId,
-                        //             'PR_number' => $request->transBasemoldPR,
-                        //             'GR_number' => $request->transBasemoldGR,
-                        //             'OUT' =>  $glued_out,
-                        //             'NG' => $request->trans_grinded_ng,
-                        //             'golden_sample' => $request->trans_grinded_gsamp,
-                        //             'EOH' => $glued_trans_next_eoh,
-                        //             'created_at' => NOW()
-                        //             ]);
-                
-                        //             $basemold_wip_id1 = BasemoldWip::insertGetId([
-                        //             'fk_basemold_id' => $request->transBasemoldId1,
-                        //             'PR_number' => $request->transBasemoldPR,
-                        //             'GR_number' => $request->transBasemoldGR,
-                        //             'OUT' =>  $glued_out,
-                        //             'NG' => $request->trans_grinded_ng,
-                        //             'golden_sample' => $request->trans_grinded_gsamp,
-                        //             'EOH' => $glued_trans_next_eoh,
-                        //             'created_at' => NOW()
-                        //             ]);
-
-                        //             $fgs_rework_visual_id = ReworkVisual::insertGetId([
-                        //                 'fk_fgs_id' => $fgs_id->id,
-                        //                 'PR_number'=> $request->transBasemoldPR,
-                        //                 'GR_number' => $request->transBasemoldGR,
-                        //                 'fgs_rework_IN' => $request->trans_fgs_in,
-                        //                 'EOH' => $final_eoh,
-                        //                 'remarks' => $get_fgs_recieve_data1->remarks,
-                        //                 'created_at' => NOW()
-                        //             ]);
-            
-                        //             ReworkVisualTransaction::insert([
-                        //                 'date' => $request->trans_date,
-                        //                 'fk_rework_id' => $fgs_rework_visual_id,
-                        //             ]);
-    
-                        //             wipTransaction::insert([
-                        //                 'fk_basemold_id' => $basemold_wip_id,
-                        //                 'fk_rework_visual_id' => $fgs_rework_visual_id,
-                        //                 'transaction_date' => NOw(),
-                        //                 'remarks' => $request->trans_remarks
-                        //             ]);
-
-                        //             wipTransaction::insert([
-                        //                 'fk_basemold_id' => $basemold_wip_id1,
-                        //                 'fk_rework_visual_id' => $fgs_rework_visual_id,
-                        //                 'transaction_date' => NOW(),
-                        //                 'remarks' => $request->trans_remarks
-                        //             ]);
-            
-                        //         }
-                        //     }
-                           
-                        //     return response()->json(['result' => 1]);
-                        // }
-                        
+                        }                        
                     }
                     
                     
@@ -1668,7 +1426,7 @@ class GrindingController extends Controller
             // return "test";
             $rapid_shipment = RapidShipment::where('PONo',$get_fgs_details->PR_number)
             ->whereBetween('LastUpdate', ['2022-02-01 00:00:00', date("Y-m-d H:i:s")])
-            ->where('DeviceName',  $get_fgs_details->fgs_details->fgs_name)
+            // ->where('DeviceName',  $get_fgs_details->fgs_details->fgs_name)
             ->where('Partscode', $get_fgs_details->fgs_details->fgs_code)
             ->where('logdel', 0)
             
@@ -1737,7 +1495,7 @@ class GrindingController extends Controller
             }
 
         }
-        return response()->json(['result' => $rapid_shipment, 'test' => $get_fgs_details, ]);
+        return response()->json(['result' => $rapid_shipment, 'test' => $get_fgs_details]);
 
     }
 
@@ -1752,7 +1510,7 @@ class GrindingController extends Controller
 
 
         $get_fgs_shipment_details = FromRapidShipment::where('Partscode', $fgsPartCodeId)
-        ->where('DeviceName', $fgsPartNameId)
+        // ->orWhere('DeviceName', $fgsPartNameId)
         ->where('PONo', $fgsPRId)
         ->where('logdel', 0)
         ->orWhere('PONo', $fgsGRId)
