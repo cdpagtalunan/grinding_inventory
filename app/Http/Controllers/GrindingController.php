@@ -88,10 +88,13 @@ class GrindingController extends Controller
         $data = $request->all(); // collect all input fields
 
         // return $data;
-
+        
         $basemold_id = Basemold::where('code', $request->BasemoldCode)
         ->where('part_name', $request->BasemoldPartname)
         ->get('id');
+
+        // return $basemold_id;
+
 
         $get_wip_basemold_existing = BasemoldWip::where('fk_basemold_id', $basemold_id[0]->id)
         ->where('PR_number', $request->BasemoldPR)
@@ -492,8 +495,7 @@ class GrindingController extends Controller
             ->where('fgs_name', $request->trans_fgs_name)
             ->where('logdel', 0)
             ->get();
-            
-            // return $check_fgs;
+
             if(count($check_fgs) == 0){
 
                 // FOR GLUED MATERIAL
@@ -763,9 +765,6 @@ class GrindingController extends Controller
 
                     if($get_fgs_recieve_data1 == null){
                         // return "maglalagay ng bago";
-                       
-
-
                         // FOR GLUED MATERIAL
                         if($request->transactionIdForTable1 == null){
                             // return "not";
@@ -1243,10 +1242,6 @@ class GrindingController extends Controller
                             }
                         }                        
                     }
-                    
-                    
-
-
                 }
             }
         }
@@ -1405,32 +1400,13 @@ class GrindingController extends Controller
         ->where('logdel', 0)
         ->where('id', $request->fgsId)
         ->first();
-        
-        // return date("Y-m-d H:i:s");
-
-        // $test = $get_fgs_details->fgs_details->fgs_code;
-        
-        // $rapid_shipment = RapidShipment::where('Partscode', $get_fgs_details->fgs_details->fgs_code)
-        // ->whereBetween('LastUpdate', ['2022-02-01 00:00:00', date("Y-m-d H:i:s")])
-        // ->Where('DeviceName',  $get_fgs_details->fgs_details->fgs_name)
-        // ->Where('PONo',$get_fgs_details->PR_number)
-        // ->where('logdel', 0)
-        
-        // ->orWhere('PONo',$get_fgs_details->GR_number)
-        // ->orderBy('id', 'desc')
-        // ->get();
-
-            
 
         if($get_fgs_details->PR_number != null || $get_fgs_details->PR_number != "N/A"){
             // return "test";
             $rapid_shipment = RapidShipment::where('PONo',$get_fgs_details->PR_number)
             ->whereBetween('LastUpdate', ['2022-02-01 00:00:00', date("Y-m-d H:i:s")])
-            // ->where('DeviceName',  $get_fgs_details->fgs_details->fgs_name)
             ->where('Partscode', $get_fgs_details->fgs_details->fgs_code)
             ->where('logdel', 0)
-            
-            // ->orWhere('PONo',$get_fgs_details->GR_number)
             ->orderBy('id', 'desc')
             ->get();
         }
@@ -1439,25 +1415,15 @@ class GrindingController extends Controller
             ->where('DeviceName',  $get_fgs_details->fgs_details->fgs_name)
             ->where('Partscode', $get_fgs_details->fgs_details->fgs_code)
             ->where('logdel', 0)
-            
             ->Where('PONo',$get_fgs_details->GR_number)
             ->orderBy('id', 'desc')
             ->get();
         }
 
-    
-
-        
-
-
         //INSERTING NEW TRANSACTION
-
         for($i = 0; $i < count($rapid_shipment); $i++){
             $check_shipment_from_rapidx = FromRapidShipment::where('rapid_id', $rapid_shipment[$i]->id)
             ->get();
-
-            // return $check_shipment_from_rapidx;
-
             if(count($check_shipment_from_rapidx) == 0){
 
                 FromRapidShipment::insert([

@@ -310,16 +310,13 @@ class PPCController extends Controller
                            'created_by' => $_SESSION['rapidx_user_id'],
                            'created_at' => NOW(),
                        ]);
-        
-                        
                     }
                     else{
                     // $coll[] = "meron";
-                        
                         $imported_basemold_id1 = Basemold::where('code', $collections[0][$index][2])
                         ->where('part_name', $collections[0][$index][3])
                         ->first();
-        
+                        
                         BasemoldRecieve::insert([
                         'date' => date("Y-m-d", strtotime($collections[0][$index][0])),
                         'fk_basemold_id' => $imported_basemold_id1->id,
@@ -335,15 +332,8 @@ class PPCController extends Controller
                         'created_by' => $_SESSION['rapidx_user_id'],
                         'created_at' => NOW(),
                         ]);
-                        
-                    
-        
-        
-        
                     }
                 }
-
-                
             }
             // return $coll;
             return response()->json(['result' => 1]);
@@ -412,10 +402,10 @@ class PPCController extends Controller
 
 
 
-                    $excel_date = $collections[0][$index][0]; //here is that value 41621 or 41631
-                    $unix_date = ($excel_date - 25569) * 86400;
-                    $excel_date = 25569 + ($unix_date / 86400);
-                    $unix_date = ($excel_date - 25569) * 86400;
+                    // $excel_date = $collections[0][$index][0]; //here is that value 41621 or 41631
+                    // $unix_date = ($excel_date - 25569) * 86400;
+                    // $excel_date = 25569 + ($unix_date / 86400);
+                    // $unix_date = ($excel_date - 25569) * 86400;
 
                     if(count($check_basemold_exist) == 0){
                         
@@ -426,7 +416,8 @@ class PPCController extends Controller
                         ]);
 
                         $basemold_id = BasemoldRecieve::insertGetId([
-                            'date' => gmdate("Y-m-d", $unix_date),
+                            // 'date' => gmdate("Y-m-d", $unix_date),
+                            'date' => $collections[0][$index][0],
                             'fk_basemold_id' => $imported_basemold_id,
                             'pr_number' => $collections[0][$index][7],
                             'gr_number' => $collections[0][$index][1],
@@ -456,7 +447,8 @@ class PPCController extends Controller
 
                         // return $test;
                         $basemold_id = BasemoldRecieve::insertGetId([
-                            'date' => gmdate("Y-m-d", $unix_date),
+                            // 'date' => gmdate("Y-m-d", $unix_date),
+                            'date' => $collections[0][$index][0],
                             'fk_basemold_id' => $imported_basemold_id1->id,
                             'pr_number' => $collections[0][$index][7],
                             'gr_number' => $collections[0][$index][1],

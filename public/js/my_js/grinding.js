@@ -55,12 +55,9 @@ function acceptBasemold(){
             // console.log(response);
 
         },
-        // error: function(data, xhr, status){
-        //     toastr.error('An error occured!\n' + 'Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
-        //     $("#iBtnEditUserIcon").removeClass('fa fa-spinner fa-pulse');
-        //     $("#btnEditUser").removeAttr('disabled');
-        //     $("#iBtnEditUserIcon").addClass('fa fa-check');
-        // }
+        error: function(data, xhr, status){
+            toastr.error('An error occured!\n' + 'Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
+        }
     });
 }
 

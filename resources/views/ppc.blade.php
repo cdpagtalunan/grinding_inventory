@@ -60,7 +60,7 @@
 
                                 </div>
                             </div><br> --}}
-                                <div class="tab-content" id="myTabContent">
+                                {{-- <div class="tab-content" id="myTabContent"> --}}
                                     <div class="table-responsive mt-2">
                                         <table id="tbl-list-receiving" class="table table-sm table-bordered table-striped table-hover dt-responsive nowrap" style="width: 100%; min-width: 10%">
                                             <thead>
@@ -92,7 +92,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                {{-- </div> --}}
                             </div>
                         </div>
 
