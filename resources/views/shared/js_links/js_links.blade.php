@@ -30,7 +30,7 @@
 
 <!-- Custom JS -->
 <script src="{{ asset('public/js/my_js/ppc.js?n=6') }}"></script>
-<script src="{{ asset('public/js/my_js/grinding.js?n=72') }}"></script>
+<script src="{{ asset('public/js/my_js/grinding.js?n=785') }}"></script>
 <script src="{{ asset('public/js/my_js/user.js?n=9') }}"></script>
 
 

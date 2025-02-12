@@ -597,6 +597,9 @@
                                 @csrf
                                 <input type="hidden" id="reworkVisualTransactId" name="reworkVisualTransactId">
                                 <input type="hidden" id="reworkVisualId" name="reworkVisualId">
+                                <input type="hidden" id="reworkPR" name="reworkPR">
+                                <input type="hidden" id="reworkGR" name="reworkGR">
+
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col">
@@ -619,7 +622,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <label class="form-control-label text-secondary" data-toggle="tooltip" data-placement="top" title="Automatic">Buyoff QTY:<i class="fas fa-exclamation-circle"></i></label> 
-                                            <input type="text" class="form-control" id="buyoffQtyId" name="buyoffQty" readonly>
+                                            <input type="text" class="form-control" id="buyoffQtyId" name="buyoffQty" readonly required>
                                         </div>
                                     </div>
                                     
@@ -1393,7 +1396,9 @@
             let fgsGRId = $('#fgsGRId').val();
             
             
-            getFgsInfoForTransaction(fgsId,fgsShipoutId);
+            // getFgsInfoForTransaction(fgsId,fgsShipoutId);
+            getFgsInfoForTransaction(fgsId,fgsShipoutId, fgsPRId, fgsGRId);
+
 
             $('#shipout_id').val(fgsShipoutId);
             $('#fk_fgs_id').val(fkFgsId);
@@ -1448,7 +1453,12 @@
             event.preventDefault();
             addRemarksWip();
         });
-        
+
+        $('#reworkVisualTransactionModal').on('hidden.bs.modal', function(){
+            console.log('modal reworkVisualTransactionModal is closed');
+            $('#formReworkVisualTransaction')[0].reset();
+
+        })
 
 
     });

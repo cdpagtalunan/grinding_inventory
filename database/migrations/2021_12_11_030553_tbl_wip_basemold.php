@@ -13,7 +13,7 @@ class TblWipBasemold extends Migration
      */
     public function up()
     {
-        //
+        
         Schema::create('tbl_wip_basemold', function (Blueprint $table) {
 
             $table->bigIncrements('id');

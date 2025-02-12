@@ -460,7 +460,7 @@ function getFgsInfo(fgsId){
     });
 }
 
-function getFgsInfoForTransaction(fgsId,fgsShipoutId){
+function getFgsInfoForTransaction(fgsId,fgsShipoutId, fgsPRId, fgsGRId){
 
     $.ajax({
         url: 'get_fgs_info_for_transaction',
@@ -468,6 +468,8 @@ function getFgsInfoForTransaction(fgsId,fgsShipoutId){
         data: {
             fgsId : fgsId,
             fgsShipoutId : fgsShipoutId,
+            fgsPR : fgsPRId,
+            fgsGR : fgsGRId
         },
         dataType: 'json',
         success: function(response){
@@ -594,8 +596,8 @@ function getReworkVisualInfo(reworkVisualId){
             $('#reworkRemarksId').val(response['result'][0]['remarks']);
             
             $('#reworkVisualId').val(response['result'][0]['id']);
-            
-
+            $('#reworkPR').val(response['result'][0]['PR_number']);
+            $('#reworkGR').val(response['result'][0]['GR_number']);
 
             dataTableReworkVisualTransaction.draw();
 

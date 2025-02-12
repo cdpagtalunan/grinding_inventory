@@ -1347,9 +1347,11 @@ class GrindingController extends Controller
         $fgs_recieve_details = FgsRecieve::with([
             'fgs_details'
         ])
-        ->orderBy('id', 'desc')
         ->where('logdel', 0)
-        ->where('id', $request->fgsId)
+        // ->where('id', $request->fgsId)
+        ->where('PR_number', $request->fgsPR)
+        ->where('GR_number', $request->fgsGR)
+        ->orderBy('id', 'desc')
         ->get();
 
         $fgs_details1 = collect($fgs_recieve_details)->unique('fk_fgs_id')->flatten(1);
@@ -1763,8 +1765,8 @@ class GrindingController extends Controller
     public function inset_rework_visual_transaction(Request $request){
         date_default_timezone_set('Asia/Manila');
         
-        $data = $request->all();
 
+        $data = $request->all();
         if($request->visualNG == null){
             $request->visualNG = 0;
         }
@@ -1772,22 +1774,21 @@ class GrindingController extends Controller
             $request->reworkNG = 0;
 
         }
-
-     
+        $subtractedEOH = 0;
 
         if($request->buyoffQty != null){
 
-            $reworkvisualdata = ReworkVisual::where('id', $request->reworkVisualId)
+            // $reworkvisualdata = ReworkVisual::where('id', $request->reworkVisualId)
+            $reworkvisualdata = ReworkVisual::where('PR_number', $request->reworkPR)
+            ->where('GR_number', $request->reworkGR)
+            ->orderBy('id', 'desc')
             ->get();
 
-
-            // return $reworkvisualdata;
             $NG = $request->visualNG + $request->reworkNG;
             $subtractedEOH = $reworkvisualdata[0]->EOH - $request->reworkVisualQty;
 
-
-
-
+            // return $subtractedEOH;
+            // return $subtractedEOH;
             $rework_visual_id = ReworkVisual::insertGetId([
                 'fk_fgs_id' => $reworkvisualdata[0]->fk_fgs_id,
                 'PR_number' => $reworkvisualdata[0]->PR_number,
