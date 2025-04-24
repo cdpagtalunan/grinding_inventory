@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\GrindingController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,6 +13,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Route::get('/', function () {
     return view('dashboard');
@@ -56,7 +60,8 @@ Route::get('/download_file', 'PPCController@download_file');
 
 
 //Grinding Route
-Route::get('/get_basemold_info_grinding', 'GrindingController@get_basemold_info_grinding');
+// Route::get('/get_basemold_info_grinding', 'GrindingController@get_basemold_info_grinding')->name('get_basemold_info_grinding');
+Route::get('/get_basemold_info_grinding', [GrindingController::class, 'get_basemold_info_grinding'])->name('get_basemold_info_grinding');
 Route::post('/accept_basemold', 'GrindingController@accept_basemold');
 Route::post('/disapprove_basemold', 'GrindingController@disapprove_basemold');
 
@@ -123,10 +128,6 @@ Route::get('/get_rework_visual_transaction_details', 'TransactionController@get_
 Route::get('/get_buyoff_transaction_history', 'TransactionController@get_buyoff_transaction_history');
 Route::get('/get_buyoff_transaction_details', 'TransactionController@get_buyoff_transaction_details');
 
-
-
-
-
-
-
-
+Route::get('/get_remarks', 'CommonController@get_remarks')->name('get_remarks');
+Route::post('/print_basemold_qr_code', 'CommonController@print_basemold_qr_code')->name('print_basemold_qr_code');
+Route::get('/basemold_reprint_qr', 'CommonController@basemold_reprint_qr')->name('basemold_reprint_qr');

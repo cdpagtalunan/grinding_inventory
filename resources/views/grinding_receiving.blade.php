@@ -361,6 +361,109 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="modal fade" id="modalPrintQrCode" data-backdrop="static" data-formid="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title"><i class="fas fa-info-circle fa-sm"></i> Basemold QR Code</h3>
+                                                <button id="close" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form id="formQRBasemoldReceive" autocomplete="off">
+                                                @csrf
+                                                <div class="modal-body">
+                                                        <input type="text" name="basemold_receive_id" id="basemoldReceiveId" hidden>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <div class="input-group-prepend w-50">
+                                                                        <span class="input-group-text w-100">Device Name:</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" id="basemoldReceiveDeviceName" name="basemold_receive_device_name" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <div class="input-group-prepend w-50">
+                                                                        <span class="input-group-text w-100">PO No.:</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" id="basemoldReceivePoNo" name="basemold_receive_po_no" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <div class="input-group-prepend w-50">
+                                                                        <span class="input-group-text w-100">PO Qty:</span>
+                                                                    </div>
+                                                                    <input type="number" min='0' class="form-control" id="basemoldReceivePoQty" name="basemold_receive_po_qty" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <div class="input-group-prepend w-50">
+                                                                        <span class="input-group-text w-100">Basemold Lot No.:</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" id="basemoldLotNo" name="basemold_lot_no" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <div class="input-group-prepend w-50">
+                                                                        <span class="input-group-text w-100">SAT:</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" id="basemoldSAT" name="basemold_sat" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <div class="input-group-prepend w-50">
+                                                                        <span class="input-group-text w-100">Selection Remarks:</span>
+                                                                    </div>
+                                                                    {{-- <select name="sel_remarks" id="selRemarks" class="form-control select2bs4"></select> --}}
+                                                                    <input type="text" name="sel_remarks" id="selRemarks" class="form-control" list="remarkOptions" required>
+                                                                    <datalist id="remarkOptions">
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <div class="input-group-prepend w-50">
+                                                                        <span class="input-group-text w-100">Golden Sample:</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" id="basemoldGoldSample" name="basemold_gold_sample" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-end">
+                                                    <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-success" id="btnProceedPrintQR">Print</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
 
@@ -374,6 +477,13 @@
 
 @section('js_content')
 <script>
+    $('.select2').select2();
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+    theme: 'bootstrap4'
+    });
+
     $(document).ready(function () {
         //PACKING LIST DATA TABLE
         var date_from = $("input[id='from_date']",$("#formDateSearch")).val();
@@ -408,9 +518,6 @@
             ],
         });
 
-     
-
-   
         $(document).on('click', '.btn-basemold-view', function(){
             let basemoldId = $(this).attr('basemold-id');
             getBasemoldInfo(basemoldId);
@@ -441,9 +548,141 @@
             disapproveBasemold();
         });
 
+        $(document).on('click', '.btnPrintQRCode', function(){
+            let basemoldInfo = $(this).attr('basemold-details');
+            let parsedBasemoldInfo = JSON.parse(basemoldInfo)
+            $('#basemoldReceiveId', $('#formQRBasemoldReceive')).val(parsedBasemoldInfo.id);
+            $('#basemoldReceiveDeviceName', $('#formQRBasemoldReceive')).val(parsedBasemoldInfo.basemold.part_name);
+            $('#basemoldReceivePoNo', $('#formQRBasemoldReceive')).val(parsedBasemoldInfo.pr_number);
+            getDatalistRemarks();
+            $('#modalPrintQrCode').modal('show');
+        });
 
+        $('#formQRBasemoldReceive').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('print_basemold_qr_code') }}",
+                data: $(this).serialize(),
+                dataType: "json",
+                beforeSend: function(){
+                    // $('#btnProceedPrintQR').attr('disabled', true);
+                },
+                success: function (response) {
+                    // console.log(response.data.sel_remarks);
+                    if(response.result){
+                        windowOpen(response.qrcode, response.label);
+                        dataTableBasemoldGrinding.draw();
+                        $('#modalPrintQrCode').modal('hide');
+                    }else{
+                        alert('Error! Please contact your system administrator.');
+                    }
+                },
+                error: function(data, xhr, status){
+                    alert('Error! Please contact your system administrator.');
+                    console.log('Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
+                }
+            });
+        });
 
+        $('#modalPrintQrCode').on('hidden.bs.modal', function () {
+            console.log('Modal closed!');
+            $('#formQRBasemoldReceive')[0].reset();
+            $('#remarkOptions').html('');
+        });
+
+        $(document).on('click', '.btnReprintQr', function(){
+            let basemoldId = $(this).attr('basemold-id');
+            $.ajax({
+                type: "GET",
+                url: "{{ route('basemold_reprint_qr') }}",
+                data:{
+                    basemold_id: basemoldId
+                },
+                dataType: "json",
+                beforeSend: function(){
+                },
+                success: function (response) {
+                    if(response.result){
+                        windowOpen(response.qrcode, response.label);
+                    }else{
+                        alert('Error! Please contact your system administrator.');
+                    }
+                },
+                error: function(data, xhr, status){
+                    console.log('Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
+                }
+            });
+        });
+        
     });
+
+    function getDatalistRemarks(){
+        $.ajax({
+            type: "GET",
+            url: "{{ route('get_remarks') }}",
+            // data: "",
+            dataType: "json",
+            beforeSend: function(){
+            },
+            success: function (response) {
+                console.log(response);
+                let options = '';
+                response.forEach(response => {
+                    options += `<option value="${response.remarks}">`;
+                });
+                $('#remarkOptions').html(options);
+            },
+            error: function(data, xhr, status){
+                console.log('Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
+            }
+        });
+    }
+
+    function windowOpen(qrCode, label){
+        popup = window.open();
+        let content = '';
+
+        content += '<html>';
+        content += '<head>';
+        content += '<title></title>';
+        content += '<style type="text/css">';
+        content += '@media print { .pagebreak { page-break-before: always; } }';
+        content += '</style>';
+        content += '</head>';
+        content += '<body>';
+        content += '<table style="margin-left: -5px; margin-top: 15px;">';
+        content += '<tr style="width: 290px;">';
+        content += '<td style="vertical-align: bottom;">';
+        content += '<img id="qrImage" src="' + qrCode + '" style="min-width: 75px; max-width: 75px;">';
+        content += '</td>';
+        content += '<td style="font-size: 10px; font-family: Calibri;">'+label+'</td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '<br>';
+        content += '</body>';
+        content += '</html>';
+        popup.document.write(content);
+        // popup.focus(); //required for IE
+        // popup.print();
+        popup.document.close();
+
+        // Wait for the image to load before printing
+        popup.onload = function() {
+            const img = popup.document.getElementById('qrImage');
+            if (img.complete) {
+                popup.focus();
+                popup.print();
+                popup.close();
+            } else {
+                img.onload = function () {
+                    popup.focus();
+                    popup.print();
+                    popup.close();
+                };
+            }
+        };
+    }
 </script>
 
 @endsection

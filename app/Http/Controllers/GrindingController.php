@@ -18,62 +18,60 @@ use App\Model\FromRapidShipment;
 use App\Model\ReworkVisual;
 use App\Model\ReworkVisualTransaction;
 use App\Model\RapidPOReceive;
-
-
-
-
 use DataTables;
 
 class GrindingController extends Controller
 {
-    //
-    public function get_basemold_info_grinding(){
+    public function get_basemold_info_grinding(Request $request){
         $basemold = BasemoldRecieve::with([
-            'basemold'
+            'basemold',
+            'basemold_qr'
         ])
         ->where('logdel', 0)
         ->whereIn('status', [0,1,3])
         ->orderBy('id', 'desc')
         ->get();
-        // $basemold = Basemold::
-        //             get();
 
         return DataTables::of($basemold)
         ->addColumn('status', function($basemold){
-        $result = "";
-        if($basemold->status == 0 ){
-            $result .= "<center><span class='badge badge-secondary'>Pending</span></center>";
-        }
-        else if($basemold->status == 1){
-            $result .= "<center><span class='badge badge-success'>Accepted</span></center>";
-        }
-        else if($basemold->status == 3){
-            $result .= "<center><span class='badge badge-warning'>Accepted <br> With Remarks</span></center>";
-        }
-        else{
-            $result .= "<center><span class='badge badge-danger'>Not Accepted</span></center>";
-        }
+            $result = "";
+            if($basemold->status == 0 ){
+                $result .= "<center><span class='badge badge-secondary'>Pending</span></center>";
+            }
+            else if($basemold->status == 1){
+                $result .= "<center><span class='badge badge-success'>Accepted</span></center>";
+            }
+            else if($basemold->status == 3){
+                $result .= "<center><span class='badge badge-warning'>Accepted <br> With Remarks</span></center>";
+            }
+            else{
+                $result .= "<center><span class='badge badge-danger'>Not Accepted</span></center>";
+            }
 
-        return $result;
+            return $result;
         })
 
 
         ->addColumn('action', function($basemold){
-        $result = "";
-        if($basemold->status == 0 ){
-            $result .= '<center><button class="btn btn-info btn-sm  btn-basemold-accept mr-1"  data-toggle="modal" data-target="#modalAcceptBasemoldDetails" basemold-id="'.$basemold->id.'"><i class="fas fa-eye"></i></button>';
-        }
-        else{
-            $result .= '<center><button class="btn btn-info btn-sm  btn-basemold-view mr-1"  data-toggle="modal" data-target="#modalViewBasemoldDetails" basemold-id="'.$basemold->id.'"><i class="fas fa-eye"></i></button>';
+            $result = "";
+            if($basemold->status == 0 ){
+                $result .= '<center><button class="btn btn-info btn-sm  btn-basemold-accept mr-1"  data-toggle="modal" data-target="#modalAcceptBasemoldDetails" basemold-id="'.$basemold->id.'"><i class="fas fa-eye"></i></button>';
+            }
+            else{
+                $result .= "<center>";
+                
+                $result .= '<button class="btn btn-info btn-sm btn-basemold-view mr-1"  data-toggle="modal" data-target="#modalViewBasemoldDetails" basemold-id="'.$basemold->id.'"><i class="fas fa-eye"></i></button>';
+                if(isset($basemold->basemold_qr)){
+                    $result .= "<button class='btn btn-secondary btn-sm mr-1 btnReprintQr' basemold-id='{$basemold->id}'><i class='fas fa-print'></i></button>";
+                }
+                else{
+                    $result .= "<button class='btn btn-warning btn-sm mr-1 btnPrintQRCode' basemold-details='{$basemold}'><i class='fas fa-print'></i></button>";
+                }
+                
+                $result .= "</center>";
 
-        }
-
-        // $result .= '<button class="btn btn-primary btn-sm  btn-edt-basemold mr-1"  data-toggle="modal" data-target="#modalAddBaseMold" basemold-id="'.$basemold->id.'"><i class="fa fa-edit"></i></button>';
-        // $result .= '<button class="btn btn-danger btn-sm btn-del-basemold" data-toggle="modal" data-target="#modalDelBaseMold"  basemold-id="'.$basemold->id.'"><i class="fa fa-times"></i></button></center>';
-
-
-
-        return $result;
+            }
+            return $result;
         })
         ->rawColumns(['status','action'])
         ->make(true);
