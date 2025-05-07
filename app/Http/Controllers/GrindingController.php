@@ -25,7 +25,7 @@ class GrindingController extends Controller
     public function get_basemold_info_grinding(Request $request){
         $basemold = BasemoldRecieve::with([
             'basemold',
-            'basemold_qr'
+            // 'basemold_qr'
         ])
         ->where('logdel', 0)
         ->whereIn('status', [0,1,3])
@@ -61,12 +61,12 @@ class GrindingController extends Controller
                 $result .= "<center>";
                 
                 $result .= '<button class="btn btn-info btn-sm btn-basemold-view mr-1"  data-toggle="modal" data-target="#modalViewBasemoldDetails" basemold-id="'.$basemold->id.'"><i class="fas fa-eye"></i></button>';
-                if(isset($basemold->basemold_qr)){
-                    $result .= "<button class='btn btn-secondary btn-sm mr-1 btnReprintQr' basemold-id='{$basemold->id}'><i class='fas fa-print'></i></button>";
-                }
-                else{
-                    $result .= "<button class='btn btn-warning btn-sm mr-1 btnPrintQRCode' basemold-details='{$basemold}'><i class='fas fa-print'></i></button>";
-                }
+                // if(isset($basemold->basemold_qr)){
+                //     $result .= "<button class='btn btn-secondary btn-sm mr-1 btnReprintQr' basemold-id='{$basemold->id}'><i class='fas fa-print'></i></button>";
+                // }
+                // else{
+                //     $result .= "<button class='btn btn-warning btn-sm mr-1 btnPrintQRCode' basemold-details='{$basemold}'><i class='fas fa-print'></i></button>";
+                // }
                 
                 $result .= "</center>";
 
@@ -372,7 +372,8 @@ class GrindingController extends Controller
                 $result .= '<button class="btn btn-secondary btn-sm btn-wip-remarks mr-1"  data-toggle="modal" data-target="#WipBasemoldRemarks" wip-basemold-id="'.$basemold->id.'"><i class="fas fa-edit"></i></button>';
                 
             
-    
+                $result .= "<button class='btn btn-warning btn-sm mr-1 btnPrintQRCode' rework-details='{$basemold}'><i class='fas fa-print'></i></button></center>";
+
             // $result .= '<button class="btn btn-primary btn-sm  btn-edt-basemold mr-1"  data-toggle="modal" data-target="#modalAddBaseMold" basemold-id="'.$basemold->id.'"><i class="fa fa-edit"></i></button>';
             // $result .= '<button class="btn btn-danger btn-sm btn-del-basemold" data-toggle="modal" data-target="#modalDelBaseMold"  basemold-id="'.$basemold->id.'"><i class="fa fa-times"></i></button></center>';
     
@@ -1646,9 +1647,10 @@ class GrindingController extends Controller
             $result = "";
             
                 $result .= '<center><button class="btn btn-info btn-sm  btn-rework-visual mr-1" data-target="#reworkVisualModal"  data-toggle="modal" rework-visual-id="'.$rework_visual_details->id.'"><i class="fas fa-eye"></i></button>';
-                $result .= '<button class="btn btn-secondary btn-sm  btn-rework-visual-edit mr-1" data-target="#reworkVisualModalEdit"  data-toggle="modal" rework-visual-id="'.$rework_visual_details->id.'"><i class="fa fa-edit"></i></button></center>';
-         
-    
+                $result .= '<button class="btn btn-secondary btn-sm  btn-rework-visual-edit mr-1" data-target="#reworkVisualModalEdit"  data-toggle="modal" rework-visual-id="'.$rework_visual_details->id.'"><i class="fa fa-edit"></i></button>';
+                
+                // $result .= "<button class='btn btn-warning btn-sm mr-1 btnPrintQRCode' rework-details='{$rework_visual_details}'><i class='fas fa-print'></i></button></center>";
+                
             // $result .= '<button class="btn btn-primary btn-sm  btn-edt-basemold mr-1"  data-toggle="modal" data-target="#modalAddBaseMold" basemold-id="'.$basemold->id.'"><i class="fa fa-edit"></i></button>';
             // $result .= '<button class="btn btn-danger btn-sm btn-del-basemold" data-toggle="modal" data-target="#modalDelBaseMold"  basemold-id="'.$basemold->id.'"><i class="fa fa-times"></i></button></center>';
     

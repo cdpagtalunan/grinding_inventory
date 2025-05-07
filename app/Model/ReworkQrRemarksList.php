@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BasemoldQrRemarksList extends Model
+class ReworkQrRemarksList extends Model
 {
-    protected $table = 'basemold_qr_remarks_lists';
+    protected $table = 'rework_qr_remarks_lists';
     protected $connection = 'mysql';
 
     protected $fillable = [

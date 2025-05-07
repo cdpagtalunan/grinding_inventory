@@ -1018,6 +1018,108 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="modalPrintQrCode" data-backdrop="static" data-formid="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title"><i class="fas fa-info-circle fa-sm"></i> Basemold QR Code</h3>
+                                <button id="close" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="formReworkQR" autocomplete="off">
+                                @csrf
+                                <div class="modal-body">
+                                        <input type="text" name="rework_id" id="reworkId" hidden>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-prepend w-50">
+                                                        <span class="input-group-text w-100">PO No.:</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="reworkPoNo" name="rework_po_no" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-prepend w-50">
+                                                        <span class="input-group-text w-100">Device Name:</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="reworkDeviceName" name="rework_device_name" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                       
+
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-prepend w-50">
+                                                        <span class="input-group-text w-100">PO Qty:</span>
+                                                    </div>
+                                                    <input type="number" min='0' class="form-control" id="reworkPoQty" name="rework_po_qty" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-prepend w-50">
+                                                        <span class="input-group-text w-100">Basemold Lot No.:</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="reworkLotNo" name="rework_lot_no" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-prepend w-50">
+                                                        <span class="input-group-text w-100">SAT:</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="reworkSAT" name="rework_sat" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-prepend w-50">
+                                                        <span class="input-group-text w-100">Selection Remarks:</span>
+                                                    </div>
+                                                    {{-- <select name="sel_remarks" id="selRemarks" class="form-control select2bs4"></select> --}}
+                                                    <input type="text" name="sel_remarks" id="selRemarks" class="form-control" list="remarkOptions" required>
+                                                    <datalist id="remarkOptions">
+                                                    </datalist>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <div class="input-group-prepend w-50">
+                                                        <span class="input-group-text w-100">Golden Sample:</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="reworkGoldSample" name="rework_gold_sample" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer justify-content-end">
+                                    <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-success" id="btnProceedPrintQR">Print</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -1460,11 +1562,142 @@
 
         })
 
+        $(document).on('click', '.btnPrintQRCode', function(){
+            let reworkInfo = $(this).attr('rework-details');
+            let parsedreworkInfo = JSON.parse(reworkInfo)
+            console.log(parsedreworkInfo);
+            $.ajax({
+                type: "GET",
+                url: "{{ route('get_po_receive_item_name') }}",
+                data: {
+                    pr_num : parsedreworkInfo.PR_number
+                },
+                dataType: "json",
+                beforeSend: function(){
+                    getDatalistRemarks();
+                },
+                success: function (response) {
+                    $('#reworkDeviceName', $('#formReworkQR')).val(response.ItemName);
+                    $('#reworkId', $('#formReworkQR')).val(parsedreworkInfo.id);
+                    $('#reworkPoNo', $('#formReworkQR')).val(parsedreworkInfo.PR_number);
+                    $('#modalPrintQrCode').modal('show');
+                },
+                error: function(data, xhr, status){
+                    console.log('Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
+                }
+            });
+            // $('#reworkDeviceName', $('#formReworkQR')).val(parsedreworkInfo.fgs_details.fgs_name);
+        });
+
+        $('#modalPrintQrCode').on('hidden.bs.modal', function () {
+            console.log('Modal closed!');
+            $('#formReworkQR')[0].reset();
+            $('#remarkOptions').html('');
+        });
+
+        $('#formReworkQR').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('print_rework_qr_code') }}",
+                data: $(this).serialize(),
+                dataType: "json",
+                beforeSend: function(){
+                    // $('#btnProceedPrintQR').attr('disabled', true);
+                },
+                success: function (response) {
+                    // console.log(response.data.sel_remarks);
+                    if(response.result){
+                        windowOpen(response.qrcode, response.label);
+                        $('#modalPrintQrCode').modal('hide');
+                    }else{
+                        alert('Error! Please contact your system administrator.');
+                    }
+                },
+                error: function(data, xhr, status){
+                    alert('Error! Please contact your system administrator.');
+                    console.log('Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
+                }
+            });
+        });
 
     });
 
 
+    function getDatalistRemarks(){
+        $.ajax({
+            type: "GET",
+            url: "{{ route('get_remarks') }}",
+            // data: "",
+            dataType: "json",
+            beforeSend: function(){
+            },
+            success: function (response) {
+                console.log(response);
+                let options = '';
+                response.forEach(response => {
+                    options += `<option value="${response.remarks}">`;
+                });
+                $('#remarkOptions').html(options);
+            },
+            error: function(data, xhr, status){
+                console.log('Data: ' + data + "\n" + "XHR: " + xhr + "\n" + "Status: " + status);
+            }
+        });
+    }
 
+    function windowOpen(qrCode, label){
+        popup = window.open();
+        let content = '';
+
+        content += '<html>';
+        content += '<head>';
+        content += '<title></title>';
+        content += '<style type="text/css">';
+        content += '@media print { .pagebreak { page-break-before: always; } }';
+        // content += 'body { margin: 0; font-family: Calibri; }';
+        content += '.label-container {';
+        content += '  border: 1px solid black;';
+        content += '  padding: 2px;';
+        // content += '  width: fit-content;';
+        content += '}';
+        content += '</style>';
+        content += '</head>';
+        content += '<body >';
+        content += '<div class="label-container" style=" margin-top: 15px;">';
+        content += '<table style="margin-left: -5px;">';
+        content += '<tr style="width: 290px;">';
+        content += '<td style="vertical-align: bottom;">';
+        content += '<img id="qrImage" src="' + qrCode + '" style="min-width: 75px; max-width: 75px;">';
+        content += '</td>';
+        content += '<td style="font-size: 10px; font-family: Calibri;">'+label+'</td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '<br>';
+        content += '</div>';
+        content += '</body>';
+        content += '</html>';
+        popup.document.write(content);
+        // popup.focus(); //required for IE
+        // popup.print();
+        popup.document.close();
+
+        // Wait for the image to load before printing
+        popup.onload = function() {
+            const img = popup.document.getElementById('qrImage');
+            if (img.complete) {
+                popup.focus();
+                popup.print();
+                popup.close();
+            } else {
+                img.onload = function () {
+                    popup.focus();
+                    popup.print();
+                    popup.close();
+                };
+            }
+        };
+    }
 
 </script>
 

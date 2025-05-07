@@ -4,7 +4,7 @@ namespace App\Model;
 
 use App\Model\Basemold;
 
-use App\Model\BasemoldReceiveQr;
+// use App\Model\BasemoldReceiveQr;
 use Illuminate\Database\Eloquent\Model;
 
 class BasemoldRecieve extends Model
@@ -17,7 +17,7 @@ class BasemoldRecieve extends Model
         return $this->hasOne(Basemold::class, 'id', 'fk_basemold_id');
     }
 
-    public function basemold_qr(){
-        return $this->hasOne(BasemoldReceiveQr::class,  'basemold_receive_id', 'id');
-    }
+    // public function basemold_qr(){
+    //     return $this->hasOne(BasemoldReceiveQr::class,  'basemold_receive_id', 'id');
+    // }
 }

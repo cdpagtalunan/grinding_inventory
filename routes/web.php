@@ -129,5 +129,6 @@ Route::get('/get_buyoff_transaction_history', 'TransactionController@get_buyoff_
 Route::get('/get_buyoff_transaction_details', 'TransactionController@get_buyoff_transaction_details');
 
 Route::get('/get_remarks', 'CommonController@get_remarks')->name('get_remarks');
-Route::post('/print_basemold_qr_code', 'CommonController@print_basemold_qr_code')->name('print_basemold_qr_code');
-Route::get('/basemold_reprint_qr', 'CommonController@basemold_reprint_qr')->name('basemold_reprint_qr');
+Route::post('/print_rework_qr_code', 'CommonController@print_rework_qr_code')->name('print_rework_qr_code');
+Route::get('/get_po_receive_item_name', 'CommonController@get_po_receive_item_name')->name('get_po_receive_item_name');
+// Route::get('/basemold_reprint_qr', 'CommonController@basemold_reprint_qr')->name('basemold_reprint_qr');
