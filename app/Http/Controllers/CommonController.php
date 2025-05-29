@@ -31,16 +31,17 @@ class CommonController extends Controller
                 'rework_id' => $request->rework_id,
                 'po_qty'              => $request->rework_po_qty,
                 'rw_lot_no'           => $request->rework_lot_no,
-                'rw_sat'              => $request->rework_sat,
+                // 'rw_sat'              => $request->rework_sat,
                 'sel_remarks'         => $request->sel_remarks,
-                'rw_gold_sample'      => $request->rework_gold_sample,
+                // 'rw_gold_sample'      => $request->rework_gold_sample,
                 'created_by'          => $_SESSION['rapidx_user_id'],
                 'created_at'          => NOW(),
             ]);
 
             $data = $request->except(['_token', 'rework_id']);
 
-            $label = "<b>{$request->rework_po_no}</b><br>{$request->rework_device_name}<br>{$request->rework_po_qty}<br>{$request->rework_lot_no}<br>{$request->rework_sat}<br>{$request->sel_remarks}<br>{$request->rework_gold_sample}<br>";
+            // $label = "<b>{$request->rework_po_no}</b><br>{$request->rework_device_name}<br>{$request->rework_po_qty}<br>{$request->rework_lot_no}<br>{$request->rework_sat}<br>{$request->sel_remarks}<br>{$request->rework_gold_sample}<br>";
+            $label = "<b>{$request->rework_po_no}</b><br>{$request->rework_device_name}<br>{$request->rework_po_qty}<br>{$request->rework_lot_no}<br>{$request->sel_remarks}<br>";
             $qrcode = QrCode::format('png')
             ->size(200)->errorCorrection('H')
             ->generate(json_encode($data));

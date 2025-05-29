@@ -1076,7 +1076,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2">
+                                        {{-- <div class="row mb-2">
                                             <div class="col-sm-12">
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="input-group-prepend w-50">
@@ -1085,7 +1085,7 @@
                                                     <input type="text" class="form-control" id="reworkSAT" name="rework_sat" required>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="row mb-2">
                                             <div class="col-sm-12">
@@ -1101,7 +1101,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2">
+                                        {{-- <div class="row mb-2">
                                             <div class="col-sm-12">
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="input-group-prepend w-50">
@@ -1110,7 +1110,7 @@
                                                     <input type="text" class="form-control" id="reworkGoldSample" name="rework_gold_sample" required>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                 </div>
                                 <div class="modal-footer justify-content-end">
                                     <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Cancel</button>
